@@ -1,5 +1,15 @@
-#Take the cleaned data from the 'scatter_plots.R' script and 
-#run the linear regression models on them.
+#=========================================================#
+## ===================== OVERVIEW ====================== ##
+#=========================================================#
+
+## This script is meant to aggregate data from the North Temperate Lakes
+## Long Term Ecological Research Site (NTL LTER) as part of the analysis that 
+## characterizes the under-ice light environment. The core analyses focus on:
+## 1. Relating PAR with Snow Depth
+## 2. Relating PAR with Snow Depth and White Ice Cover
+## 3. Relating Chlorophyll Concentration with PAR
+## The main goal of this script is to perform cleaned statistical models based on the 
+## core figures and analyses conducted in the script "par_chla_plts.R".
 
 
 # 1. Libraries ------------------------------------------------------------

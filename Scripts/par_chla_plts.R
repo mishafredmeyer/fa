@@ -1,8 +1,29 @@
-#Libraries----
+#=========================================================#
+## ===================== OVERVIEW ====================== ##
+#=========================================================#
+
+## This script is meant to aggregate data from the North Temperate Lakes
+## Long Term Ecological Research Site (NTL LTER) as part of the analysis that 
+## characterizes the under-ice light environment. The core analyses focus on:
+## 1. Relating PAR with Snow Depth
+## 2. Relating PAR with Snow Depth and White Ice Cover
+## 3. Relating Chlorohyll Concentration with PAR
+## Interspersed wtihin the code, there are also statistical models to analyze these results
+## The main products of this script are figures for each of the 3 goals. 
+
+# Libraries -- Load necessary libraries
 
 library(tidyverse)
-library(here)
+library(ggpmisc)
+library(ggpubr)
+library(olsrr)
 
+# Load Necessary Data -----------------------------------------------------
+
+## This section downloads data from the Environmental Data Initiative, where the 
+## data from the NTL LTER are housed. The below steps download the data from EDI 
+## and then format column types appropriately. Note that these steps are essential
+## for successive data manipulation and analyses. 
 
 #############
 # Snow Data #
@@ -103,7 +124,7 @@ dt2 <-read.csv(infile2,header=F
                  "flago2sat",     
                  "flagdeck",     
                  "flaglight",     
-                 "flagfrlight"    ), check.names=TRUE)
+                 "flagfrlight"), check.names=TRUE)
 
 unlink(infile2)
 
@@ -255,13 +276,9 @@ if (class(dt4$phaeo_fluor)=="character") dt4$phaeo_fluor <-as.numeric(dt4$phaeo_
 if (class(dt4$flag_spec)!="factor") dt4$flag_spec<- as.factor(dt4$flag_spec)
 if (class(dt4$flag_fluor)!="factor") dt4$flag_fluor<- as.factor(dt4$flag_fluor)
 
+# Aggregating data ----------------------------------------------------------------
 
-
-#################
-# Scatter plots #
-#################
-
-library(tidyverse)
+## Aggregate data for light and snow
 
 df_light_snow <- dt2 %>% dplyr::select(lakeid,sampledate,light) %>% group_by(lakeid,sampledate) %>% 
   summarise(light_mean = mean(light,na.rm = T)) %>% 
@@ -269,11 +286,8 @@ df_light_snow <- dt2 %>% dplyr::select(lakeid,sampledate,light) %>% group_by(lak
              by = c('lakeid'='lakeid', 'sampledate'='sampledate')) %>% 
   drop_na(light_mean,avsnow)
 
-
-# df_light_snow %>% ggplot(aes(avsnow,light_mean))+
-#   geom_point(alpha =0.2)+
-#   facet_wrap(~lakeid)
-
+## Aggregate light and chlorophyll data for plotting and analyses.
+## This aggregation of the data is for all depths. 
 
 df_chl_light_v0 <- dt3 %>% dplyr::select(lakeid,sampledate,depth,chlor) %>% group_by(lakeid,sampledate) %>% 
   summarise(depth_mean = mean(depth,na.rm = T), chlor_mean = mean(chlor,na.rm = T)) %>% 
@@ -281,6 +295,9 @@ df_chl_light_v0 <- dt3 %>% dplyr::select(lakeid,sampledate,depth,chlor) %>% grou
                summarise(light_mean = mean(light,na.rm = T)),
              by = c('lakeid'='lakeid', 'sampledate'='sampledate')) %>% 
   drop_na(light_mean,chlor_mean)
+
+## Aggregate light and chlorophyll data for plotting and analyses.
+## This aggregation of the data is just for shallow depths (< 12 meters). 
 
 df_chl_light_v1 <- dt3 %>% dplyr::select(lakeid,sampledate,depth,chlor) %>%  filter(depth <= 12) %>% group_by(lakeid,sampledate) %>% 
   summarise(chlor_mean = mean(chlor,na.rm = T)) %>% 
@@ -290,20 +307,10 @@ df_chl_light_v1 <- dt3 %>% dplyr::select(lakeid,sampledate,depth,chlor) %>%  fil
   drop_na(light_mean,chlor_mean)
 
 
-# df_chl_light_v0 %>% ggplot(aes(chlor_mean,light_mean))+
-#   geom_point(alpha =0.1)+
-#   facet_wrap(~lakeid)
+# 3. Light-Snow Plot-------------------------------------------------------
 
 
-
-# 1. Light-Snow Plot-------------------------------------------------------
-
-library(tidyverse)
-library(here)
-library(ggpmisc)
-library(ggpubr)
-
-#**Read in ice phenology data----
+## Read in ice phenology data----
 ice <- read_csv('../Data/ntl32_v8.csv') %>% 
   mutate(
     lakeid = as.factor(lakeid)
@@ -315,7 +322,7 @@ ice <- read_csv('../Data/ntl32_v8.csv') %>%
     datefirstice
   )
 
-#**Filter light data to vars of interest----
+## Filter light data to vars of interest----
 light_clean <- dt2 %>% 
   dplyr::select(
     lakeid,
@@ -338,7 +345,7 @@ light_clean <- dt2 %>%
     light = mean(light, na.rm = T)
   )
 
-#**Alternate light data (0m only) added  2025.03.07----
+## Alternate light data (0m only) ----
 light_clean2 <- dt2 %>% 
   dplyr::select(
     lakeid,
@@ -355,7 +362,7 @@ light_clean2 <- dt2 %>%
     depth == 0
   ) 
 
-#**Get light data only for periods when the lake was completely ice covered----
+## Get light data only for periods when the lake was completely ice covered----
 light_iceon <- light_clean2 %>% 
   full_join(ice) %>% 
   mutate(
@@ -366,15 +373,14 @@ light_iceon <- light_clean2 %>%
     sampledate < datefirstopen | sampledate > datefirstice
   )
 
-#**Filter snow data to vars of interest----
-
+## Filter snow data to vars of interest----
 snow_iceon <- dt1 %>% 
   dplyr::select(lakeid, 
                 year = year4, 
                 sampledate, 
                 avsnow)
 
-#**Join the date-filtered light data with snow data----
+## Join the date-filtered light data with snow data----
 
 light_snow1 <- light_iceon %>% 
   left_join(snow_iceon) %>% 
@@ -395,7 +401,7 @@ light_snow1 <- light_iceon %>%
     lakename = as.factor(lakename)
   )
 
-#**Add an "Every" category----
+## Add an "Every" category----
 
 every <- light_snow1 %>% 
   dplyr::select(-lakename) %>% 
@@ -412,9 +418,10 @@ light_snow <- light_snow1 %>%
 
 light_snow[sapply(light_snow, is.infinite)] <- NA
 
-#write_csv(light_snow, here('2_data/light_snow.csv'))
+## Save the aggregated data for the future.
+#write_csv(light_snow,'../Data/light_snow.csv')
 
-#how much does light decay?
+## how much does light decay?
 
 light_avg <- every %>% 
   group_by(lakename) %>% 
@@ -464,16 +471,12 @@ decay_test3 <- every %>%
 summary(decay_test3)
 
 
-# ggplot(data = every, aes(x = avsnow, y = light))+
-#   geom_point()
+## Create scatter plot for snow and PAR----
 
-#**Create scatter plot for snow and PAR----
-
-#Fromula for lm to be printed on plot
+## Formula for lm to be printed on plot
 
 model <- log(1+light_snow$light) ~ log(1+light_snow$avsnow)
 
-#par_snow_plt <- ggplot(data = light_snow, aes(x = snow_log, y = par_log))+
 par_snow_plt <- ggplot(data = light_snow, aes(x = avsnow, y = light))+
   geom_point(color = '#6495ED', alpha = 0.7)+
   theme_bw()+
@@ -496,7 +499,7 @@ par_snow_plt <- ggplot(data = light_snow, aes(x = avsnow, y = light))+
 
 par_snow_plt  
 
-#**Save plot----
+## Save plot----
 ggsave('../Figures/light_snow_log_pval_revised_2025.03.07.png', dpi = 300, height = 8, width = 15, units = 'in')
 
 
@@ -523,7 +526,7 @@ light_snow_tbl2 <- light_snow %>%
 
 # 3. Chl-PAR Plot ------------------------------------------------------------
 
-#**Clean chl-a data----
+## Clean chl-a data----
 
 #Want to look at only Jan and Feb
 dt3_test <- dt3 %>% 
@@ -606,9 +609,7 @@ chl_a_iceon <- chl_par %>%
   )
 
 
-#**Create scatter plot for Chla and PAR----
-
-library(ggpmisc)
+## Create scatter plot for Chla and PAR----
 
 #Add log values to chl_a_iceon
 
@@ -622,7 +623,6 @@ chl_a_iceon_log[sapply(chl_a_iceon_log, is.infinite)] <- NA
 
 #write_csv(chl_a_iceon_log, here('2_data/chl_a_iceon_log.csv'))
 
-#chl_light_plt <- ggplot(data = chl_a_iceon_log, aes(x = par_log, y = chl_log))+
 chl_light_plt <- ggplot(data = chl_a_iceon_log, aes(x = light, y = chlor))+
   geom_point(color = '#348217', alpha = 0.5)+
   theme_bw()+
@@ -646,7 +646,7 @@ chl_light_plt <- ggplot(data = chl_a_iceon_log, aes(x = light, y = chlor))+
 
 chl_light_plt  
 
-#**Save plot----
+## Save plot----
 ggsave(
   '../Figures/chl_par_log_r2_pval_nobox_2025.06.19.png',
   dpi = 300,
@@ -670,7 +670,7 @@ chl_light_tbl_test <- chl_a_iceon_log %>%
 # 5. PAR ~ % White Ice ----------------------------------------------------
 
 #Read in NTL ice quality data
-ntl_iq <- read_csv(here('2_data/ntl_ice_quality.csv')) 
+ntl_iq <- read_csv('../Data/ntl_ice_quality.csv') 
 
 #Clean data to bind with chl data above
 ntl_iq_clean <- ntl_iq %>% 
@@ -693,7 +693,7 @@ PAR_wi_perc_plt <- ggplot(data = chl_iq, aes(x = wi_perc, y = light))+
   geom_smooth(method = 'lm', color = '#E69F00', alpha = 0.2)+
   facet_wrap(~lakename)+
   theme_classic()+
-  ylab(~ paste("PAR ", '(',mu , " M ", 'm'^-2, ' s'^-1, ')'))+
+  ylab(~ paste("PAR ", '(',mu , "M ", 'm'^-2, ' s'^-1, ')'))+
   xlab('White Ice (%)')+
   scale_color_gradientn(
     name = 'Snow Depth (cm)',
@@ -711,11 +711,10 @@ PAR_wi_perc_plt <- ggplot(data = chl_iq, aes(x = wi_perc, y = light))+
 
 PAR_wi_perc_plt
 
-ggsave(here('4_figs/PAR_wi_perc_plt_2025.06.17.png'), dpi = 300, width = 1800, height = 1800, units = 'px')
+ggsave('../Figures/PAR_wi_perc_plt_2025.06.17.png', dpi = 300, width = 1800, height = 1800, units = 'px')
 
 # 6. Multiple Regression Models -------------------------------------------
 
-library(olsrr)
 
 chl_iq1 <- chl_iq %>% 
   filter(lakename != "All Lakes") %>%
@@ -728,8 +727,6 @@ chl_iq1 <- chl_iq %>%
   dplyr::select(-lakeid)
 
 chl_iq1[sapply(chl_iq1, is.infinite)] <- NA
-
-
 
 
 #Model for light as a function of snow and ice quality
@@ -755,10 +752,6 @@ vif.1
 
 #Model for chl-a as function of PAR + snow depth + ice quality
 
-# chl_lm <- lm(data = chl_iq1, chl_log ~ par_log+ snow_log + wi_perc)
-# 
-#summary(chl_lm)
-
 chl_lm1 <- lm(data = chl_iq1, log(1+chlor) ~ log(1+light))
 
 summary(chl_lm1)
@@ -772,8 +765,8 @@ chl_lm3 <- lm(data = chl_iq1, log(1+chlor) ~ log(1+light) + log(1+avsnow) + wi_p
 summary(chl_lm3)
 
 
-#**MLR for all lakes----
-#*
+## MLR for all lakes----
+
 
 chl_light_tbl_test <- chl_a_iceon_log %>% 
   group_by(lakename) %>% 

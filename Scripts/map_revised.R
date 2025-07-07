@@ -1,5 +1,11 @@
-# This script is used to make a map of all lakes used in the 
-# data from Stephanie Hampton's 2018 ASLO presentation. 
+#=========================================================#
+## ===================== OVERVIEW ====================== ##
+#=========================================================#
+
+## This script is meant to aggregate data from the North Temperate Lakes
+## Long Term Ecological Research Site (NTL LTER) as part of the analysis that 
+## characterizes the under-ice light environment. 
+## The core output of this script is a map of all the sampling locations. 
 
 # Load packages -----------------------------------------------------------
 library(ggplot2)
