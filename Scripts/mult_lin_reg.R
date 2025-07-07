@@ -15,7 +15,6 @@
 # 1. Libraries ------------------------------------------------------------
 
 library(tidyverse)
-library(here)
 library(janitor)
 library(olsrr)
 

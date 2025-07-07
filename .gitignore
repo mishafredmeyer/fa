@@ -4,4 +4,12 @@ Scripts/Pre_ASLO_Script_Versions
 Scripts/euli_fa_SH_aslo2018_map.r
 Scripts/lter_fa_seasonal_analysis_biomass1.R
 Scripts/euli_fa_seasonal_analysis_other-rm.R
-
+Figures
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+# MacOS .DS_Store files
+*.DS_Store*
+.RDataTmp
+.Renviron
