@@ -43,7 +43,7 @@ The directories for this analysis need to be structured according to the tree:
 ```
 where data are read from and written to `Data`. 
 
-The ultimate goal of the analysis is ask:
+The ultimate goal of the analysis is to ask:
 1. How lake ice and snow cover influence the under-ice light environment,
 2. How lake ice and snow cover influence under-ice algal productivity,
 3. How lake ice cover is associated with characteristic algal communities, 
@@ -121,9 +121,9 @@ A main limitation with domain expertise comes when considering winter limnology 
 - [Stephanie E Hampton](https://tahoe.ucdavis.edu/people/stephanie-hampton) - Tahoe Environmental Research Center
 - [Matthew R Brousil](https://rossyndicate.com/author/matt-brousil-he/him/) - Colorado State University
 - [Joshua A Culpepper](https://sharmalab.wordpress.com/people/) - York University
-- [Hilary A Dugan](https://integrativebiology.wisc.edu/staff/dugan-hilary/) - University of Wisconsin - Madison
+- [Hilary A Dugan](https://integrativebiology.wisc.edu/staff/dugan-hilary/) - University of Wisconsin-Madison
 - [Aaron WE Galloway](https://cas.uoregon.edu/directory/natural-sciences/all/agallow3) - University of Oregon
-- [Noah Lottig](https://limnology.wisc.edu/staff/lottig-noah/) - University of Wisconsin - Madison
+- [Noah Lottig](https://limnology.wisc.edu/staff/lottig-noah/) - University of Wisconsin-Madison
 - [Stephen M Powers](https://biology.artsandsciences.baylor.edu/person/steve-powers-phd) - Baylor University
 - [Sapna Sharma](https://sharmalab.wordpress.com/people/) - York University
 - [Kirill Shchapov](https://www.cawthron.org.nz/our-people/kirill-shchapov/) - Cawthron Institute
@@ -136,7 +136,7 @@ This project is licensed under the Creative Commons CC0 1.0 Universal License - 
 
 In the spirit of open source, please cite any re-use of the source code stored in this repository. Below is the suggested citation:
 
-Meyer, MF, S. E. Hampton, and others. 2025. CNutritional content of winter phytoplankton communities in a varying under-ice light environment. U.S. Geological Survey software release. Reston, VA. TBD.
+Meyer, MF, S. E. Hampton, and others. 2025. Nutritional content of winter phytoplankton communities in a varying under-ice light environment. U.S. Geological Survey software release. Reston, VA. TBD.
 
 # Disclaimer
 This software is preliminary or provisional and is subject to revision.
