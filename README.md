@@ -1,4 +1,4 @@
-Last edited:  July 2025
+Last edited:  February 2026
 
 # Nutritional content of winter phytoplankton communities in a varying under-ice light environment
 
