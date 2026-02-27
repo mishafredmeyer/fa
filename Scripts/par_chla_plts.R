@@ -779,3 +779,35 @@ chl_light_tbl_test <- chl_a_iceon_log %>%
     sw_test = shapiro.test(log(1+chlor))[2],
     n = length(chl_log)
   )
+
+##### Data aggregation for phytoplankton analysis
+
+ice_snow_memo <- dt1 %>% 
+  filter(lakeid %in% c("ME", "MO")) %>%
+  mutate(month = month(ymd(sampledate))) %>%
+  group_by(lakeid, year4, month) %>%
+  summarize(across(.cols = c(nsnow, avsnow, totice, whiteice, blueice), 
+                   .fns = ~ mean(.x, na.rm = TRUE)))
+
+light_memo <- dt2 %>% 
+  filter(lakeid %in% c("ME", "MO")) %>%
+  filter(depth == 0) %>%
+  mutate(month = month(ymd(sampledate))) %>%
+  group_by(lakeid, year4, month) %>%
+  summarize(across(.cols = c(light, frlight), 
+                   .fns = ~ mean(.x, na.rm = TRUE)))
+
+chla_memo <- read_csv("../Data/ntl38_v7.csv") %>%
+  filter(lakeid %in% c("ME", "MO")) %>%
+  filter(depth_range_m == "0-2") %>%
+  mutate(month = month(ymd(sampledate))) %>%
+  group_by(lakeid, year4, month) %>%
+  summarize(across(.cols = c(tri_chl_spec, mono_chl_spec, 
+                             uncorrect_chl_fluor, correct_chl_fluor), 
+                   .fns = ~ mean(.x, na.rm = TRUE)))
+
+chem_data_together <- full_join(chla_memo, light_memo) %>%
+  full_join(x = .,
+            y = ice_snow_memo)
+
+write_csv(x = chem_data_together, file = "memo_chem_data_full.csv")

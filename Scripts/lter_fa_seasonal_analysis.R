@@ -513,6 +513,8 @@ tags_fa_NA <- lter_level_bm_tag %>%
 # --> merge together
 full_dat <- rbind(tags_fa_genus, tags_fa_groupdiv, tags_fa_NA)
 
+write.csv(x = full_dat, file = "../Data/full_dat.csv", row.names = FALSE)
+
 full_dat_spp_wide <- full_dat %>%
   select(GroupDiv, lakeid, winter_yr, season, biomass_wet_weight) %>%
   group_by(GroupDiv, lakeid, winter_yr, season) %>%

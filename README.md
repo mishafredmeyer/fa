@@ -66,6 +66,9 @@ The ultimate goal of the analysis is to ask:
 - `Scripts/lter_fa_seasonal_analysis.R`: This script performs analyses of under-ice phytoplankton fatty acid profiles from the NTL-LTER records.  
     - `Inputs`: NTL phytoplankton community assemblages for Lakes Mendota and Monon as well as characteristic fatty acid profiles 
     - `Ouputs`: Several pngs and CSVs of targeted fatty acid analyses.
+- `Scripts/post_review_fa_ice_quality.R`: This script performs analyses of under-ice fatty acid compositions with the percentage of white ice. 
+    - `Inputs`: Fractional white ice data as well as aggregated fatty acid data. 
+    - `Outputs`: Tables that summarize linear models. 
 - `Data`: All input data and derived outputs with a tabular structure should be contained here. 
 - `Figures`: All figures should be output here. 
 - `.gitignore`: A file specifying which files should not be tracked in the git repository. 
