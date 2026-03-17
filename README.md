@@ -1,6 +1,6 @@
-Last edited:  February 2026
+Last edited:  March 2026
 
-# Nutritional content of winter phytoplankton communities in a varying under-ice light environment
+# Nutritional content of winter phytoplankton communities under ice
 
 Authors: Michael F. Meyer, Stephanie E. Hampton, Matthew R. Brousil, Joshua A. Culpepper, Hilary A. Dugan, Aaron W.E. Galloway, Noah R. Lottig, Stephen M. Powers, Sapna Sharma, Kirill Shchapov
 
@@ -139,7 +139,7 @@ This project is licensed under the Creative Commons CC0 1.0 Universal License - 
 
 In the spirit of open source, please cite any re-use of the source code stored in this repository. Below is the suggested citation:
 
-Meyer, MF, S. E. Hampton, and others. 2025. Nutritional content of winter phytoplankton communities in a varying under-ice light environment. U.S. Geological Survey software release. Reston, VA. TBD.
+Meyer, MF, S. E. Hampton, and others. 2025. Nutritional content of winter phytoplankton communities under ice. U.S. Geological Survey software release. Reston, VA. TBD.
 
 # Disclaimer
 This software is preliminary or provisional and is subject to revision.
