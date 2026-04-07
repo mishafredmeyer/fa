@@ -29,6 +29,11 @@
 # 13) aggregated weighted to community level 
 # 14) plotted MUFA/PUFA/SAFA by Lake & Season; plotted Omega3:6 by Lake & Season
 
+# If you have previously aggregated these data, there are certain lines that you can 
+# skip and simply read-in saved files. Those breaks are as follows:
+# 1) LN 515 --> Fully Combined Dataset
+# 2) LN 607 --> Fully Combined Dataset with mass corrections
+# 3) LN 664 --> Fully Combined, Weighted Dataset by Seasons
 
 
 # ============================================================== #
@@ -344,9 +349,6 @@ tags <- lter_fa_tag %>% select(division, genus, cat) %>% unique()
 
 # unique(fa_fix$GroupDiv) %>% sort()
 # unique(lter_use$division) %>% sort()
-
-
-
 
 # find FA genus and division-level profiles -------------------------------
 

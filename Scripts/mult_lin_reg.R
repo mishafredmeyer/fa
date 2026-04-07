@@ -21,24 +21,24 @@ library(olsrr)
 
 # 2. Import data ----------------------------------------------------------
 
-light_snow <- read_csv(here('2_data/light_snow.csv')) %>% 
+light_snow <- read_csv('../Data/light_snow.csv') %>% 
   mutate(
     lakeid = as.factor(lakeid),
     lakename = as.factor(lakename)
   )
 
-ntl_iq <- read_csv(here('2_data/ntl_iq_clean.csv')) %>% 
+ntl_iq <- read_csv('../Data/ntl_iq_clean.csv') %>% 
   mutate(
     lakeid = as.factor(lakeid)
   )
 
-chl_a_iceon_log <- read_csv(here('2_data/chl_a_iceon_log.csv')) %>% 
+chl_a_iceon_log <- read_csv('../Data/chl_a_iceon_log.csv') %>% 
   mutate(
     lakeid = as.factor(lakeid),
-    lakename - as.factor(lakename)
+    lakename = as.factor(lakename)
   )
 
-chl_iq <- read_csv(here('2_data/chl_iq.csv')) %>% 
+chl_iq <- read_csv('../Data/chl_iq.csv') %>% 
   mutate(
     lakeid = as.factor(lakeid),
     lakename = as.factor(lakename)
@@ -72,7 +72,7 @@ chl_light_tbl_test <- chl_a_iceon_log %>%
     r2 = summary(lm(log(1+chlor) ~ log(1+light)))$r.squared,
     adj.r2 = summary(lm(log(1+chlor) ~ log(1+light)))$adj.r.squared,
     sw_test = shapiro.test(log(1+chlor))[2],
-    n = length(chl_log)
+    n = length(chlor)
   )
 
 

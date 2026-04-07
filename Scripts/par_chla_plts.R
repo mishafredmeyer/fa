@@ -621,7 +621,7 @@ chl_a_iceon_log <- chl_a_iceon %>%
 
 chl_a_iceon_log[sapply(chl_a_iceon_log, is.infinite)] <- NA
 
-#write_csv(chl_a_iceon_log, here('2_data/chl_a_iceon_log.csv'))
+#write_csv(chl_a_iceon_log, '../Data/chl_a_iceon_log.csv')
 
 chl_light_plt <- ggplot(data = chl_a_iceon_log, aes(x = light, y = chlor))+
   geom_point(color = '#348217', alpha = 0.5)+
@@ -680,13 +680,13 @@ ntl_iq_clean <- ntl_iq %>%
     wi_perc = round(whiteice/totice*100)
   )
 
-#write_csv(ntl_iq_clean, here('2_data/ntl_iq_clean.csv'))
+#write_csv(ntl_iq_clean, '../Data/ntl_iq_clean.csv')
 
 #Bind with chl data
 chl_iq <- ntl_iq_clean %>% 
   inner_join(chl_a_iceon_log) 
 
-#write_csv(chl_iq, here('2_data/chl_iq.csv'))
+#write_csv(chl_iq, '../Data/chl_iq.csv')
 
 PAR_wi_perc_plt <- ggplot(data = chl_iq, aes(x = wi_perc, y = light))+
   geom_point(aes(colour = avsnow), size = 2, alpha = 0.5)+
@@ -810,4 +810,4 @@ chem_data_together <- full_join(chla_memo, light_memo) %>%
   full_join(x = .,
             y = ice_snow_memo)
 
-write_csv(x = chem_data_together, file = "memo_chem_data_full.csv")
+write_csv(x = chem_data_together, file = "../Data/memo_chem_data_full.csv")

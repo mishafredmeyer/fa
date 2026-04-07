@@ -8,15 +8,12 @@
 ## The core output of this script is a map of all the sampling locations. 
 
 # Load packages -----------------------------------------------------------
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-library(rgdal)
-library(ggplot2)
+library(tidyverse)
 library(ggpubr)
 library(broom)
 library(viridisLite)
 library(ggrepel)
+library(sf)
 
 
 # Read, wrangle data ------------------------------------------------------
