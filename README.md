@@ -1,4 +1,4 @@
-Last edited:  March 2026
+Last edited:  April 2026
 
 # Nutritional content of winter phytoplankton communities under ice
 
@@ -8,18 +8,18 @@ Points of Contact: Michael Meyer (mfmeyer@usgs.gov) and Stephanie Hampton (seham
 
 Repository Type: R scripts supporting publication
 
-Year of Origin: 2025 (Original Publication)
+Year of Origin: 2026 (Original Publication)
 
-Year of Version: 2025
+Year of Version: 2026
 
 Digital Object Identifier (DOI): TBD
 
-USGS Information Product Data System (IPDS) no.: TBD (internal agency tracking)
+USGS Information Product Data System (IPDS) no.: IP-187359
 
 ## Respository Contents 
 
 This repository contains scripts for the associated manuscript 
-"Nutritional content of winter phytoplankton communities in a varying under-ice light environment".
+"Nutritional content of winter phytoplankton communities under ice".
 The goal of the scripts contained within this repository is to support the main analyses 
 presented in the manuscript. 
 
