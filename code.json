@@ -2,7 +2,7 @@
   {
     "name": "USGS Open Source GitLab",
     "organization": "U.S. Geological Survey",
-    "description": "This repository includes all the scripts used for the companion manuscript Nutritional content of winter phytoplankton communities in a varying under-ice light environment. All questions about the scripts and files contained within should be directed to Michael Meyer (mfmeyer@usgs.gov).",
+    "description": "This repository includes all the scripts used for the companion manuscript Nutritional content phytoplankton communities under ice. All questions about the scripts and files contained within should be directed to Michael Meyer (mfmeyer@usgs.gov).",
     "version": "1.0.0",
     "status": "Public",
 
@@ -40,7 +40,7 @@
     },
 
     "date": {
-      "metadataLastUpdated": "2025-07-27
+      "metadataLastUpdated": "2026-04-08
     }
   }
 ]
